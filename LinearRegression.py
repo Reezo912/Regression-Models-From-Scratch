@@ -27,7 +27,7 @@ X_test = scaler.fit_transform(X_test)
 
 class LinearRegression():
     def __init__(self, lr=0.001, epochs=1000):
-        lr = lr
+        self.lr = lr
         self.epochs = epochs
         self.w = None   # w = pesos
         self.b = 0.0    # b = bias
