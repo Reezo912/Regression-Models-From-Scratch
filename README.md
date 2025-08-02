@@ -125,7 +125,7 @@ F1 Score: 0.9832
 
 | Modelo              | Hipótesis                      | Función de Pérdida                                 |
 |---------------------|--------------------------------|-----------------------------------------------------|
-| Regresión Lineal    | \( y = Xw + b \)               | \( MSE = rac{1}{n}\sum(y_{true}-y_{pred})^2 \)   |
+| Regresión Lineal    | \( y = Xw + b \)               | [MSE](https://latex.codecogs.com/svg.image?MSE=\frac{1}{n}\sum\left(y-\hat{y}\right)^{2})
 | Regresión Logística | \( y = sigmoid(Xw + b) \)      | \( -rac{1}{n}\sum(y\log(y')+(1-y)\log(1-y')) \)  |
 
 - **Descenso de Gradiente:** Actualización iterativa usando derivadas parciales.
