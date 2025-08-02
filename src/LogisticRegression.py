@@ -2,8 +2,10 @@ import numpy as np
 from typing import Optional
 
 '''
-En este proyecto, implementare la regresion logistica basica multivariante utilizando la
+En este proyecto, implementare la regresion logistica binaria basica multivariante utilizando la
 libreria NumPy
+
+En un futuro mi idea es implementar un sistema multiclase utilizando One-vs-Rest (OvR) y softmax regression
 
 Para la evaluacion implementare las metricas de:
     - Accuracy
@@ -26,10 +28,10 @@ class LogisticRegression():
     # Funcion sigmoidea 1/(1+e**-z)
     # donde z = W * X + b
 
-    def sigmoid(self, z):
+    def sigmoid(self, z)-> np.ndarray:
         return 1/(1 + np.exp(-z))
 
-    def fit(self, X, y):
+    def fit(self, X, y) -> None:
         n_samples, n_features = X.shape
         self.w: np.ndarray = np.zeros(n_features)
         self.b: float = 0.0
@@ -59,7 +61,7 @@ class LogisticRegression():
             self.b -= self.lr * db 
 
             # Control
-            if epoch % 100 == 0:
+            if epoch % 1000 == 0:
                 print(f'Epoch {epoch}: Log_Loss = {log_loss:.6f}')
 
     def predict(self, X) -> np.ndarray:
@@ -75,21 +77,3 @@ class LogisticRegression():
         z = X @ self.w + self.b
         y_pred = self.sigmoid(z)
         return y_pred
-
-
-
-# Datos de test
-
-
-X_train = np.array([[10], [20], [90], [80], [30], [60], [70], [40]])
-y_train = np.array([0, 0, 1, 1, 0, 1, 1, 0])
-
-X_test = np.array([[25], [65], [55], [15]])
-y_test = np.array([0, 1, 1, 0])
-
-
-model = LogisticRegression(epoch=100000)
-
-model.fit(X_train, y_train)
-
-model.predict(X_test)

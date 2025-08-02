@@ -61,7 +61,7 @@ class LinearRegression():
             self.b -= self.lr * db
 
             # Metodo de control
-            if epoch % 100 == 0:
+            if epoch % 1000 == 0:
                 print(f'Epoch {epoch}: Loss = {loss:.6f}')
 
     def predict(self, X):
