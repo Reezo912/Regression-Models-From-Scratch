@@ -62,5 +62,15 @@ class LogisticRegression():
                 print(f'Epoch {epoch}: Log_Loss = {log_loss:.6f}')
 
     def predict(self, X):
-        
+        z = X @ self.w + self.b
+        y_pred = self.sigmoid(z)
+        y_output = np.array()
+        for i in y_pred:
+            if i >= 0.5:
+                i = 1
+                y_output.append(i)
+            else:
+                i = 0
+                y_output.append(i)
+        return y_output
         
