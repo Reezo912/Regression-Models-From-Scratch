@@ -16,51 +16,66 @@ X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
 
+# Formula y_pred = X_test @ w + b
+# w: pesos
+# b: bias
 
-# -----------------------
-# Linear regression model
-# -----------------------
+'''
+En este proyecto, implementare la regresion lineal basica multivariante utilizando la
+libreria NumPy
 
-# y_pred = X_test @ w + b 
-# w : pesos
-# b : bias
+ Para esto utilizaré la funcion de descenso de gradiente para minimizar la funcion de error,
+ que en este caso será MSE(Error cuadrático medio)
+
+ '''
 
 class LinearRegression():
-    def __init__(self, lr=0.001, epochs=1000):
+    def __init__(self, epoch=1000, lr=0.001) -> None:
         self.lr = lr
-        self.epochs = epochs
-        self.w = None   # w = pesos
-        self.b = 0.0    # b = bias
+        self.epoch = epoch
+        self.w = None  # el valor es None dado que no conozco las dimensiones de X_test
+        self.b: float = 0.0
 
-    # funcion de entrenamiento del modelo
     def fit(self, X, y):
         n_samples, n_features = X.shape
         self.w = np.zeros(n_features)
-        self.b = 0.0
+        self.b: float = 0.0
 
-        for epoch in range(self.epochs):
-            y_pred = X @ self.w + self.b   # funcion de la recta de la regresion lineal
-            error = y - y_pred             # Calculo mi error
-            loss = np.mean(error**2)       # Funcion de perdida  MSE
+        for epoch in range(self.epoch):
+            '''
+            Por cada Epoch:
+            - Defino mi funcion de la regresion lineal
+            - Calculo la matriz de error.
+            - Calculo el MSE.
+            '''
+            y_pred = X @ self.w + self.b
+            error = y - y_pred
+            loss = np.mean(error**2)
 
-            # gradient descent
-            dw = -(2/n_samples) * (np.transpose(X) @ error)  # derivada de peso
-            db = -(2/n_samples) * np.sum(error)              # derivada de bias
+            # Aplico el descenso de gradiente
+            dw = -(2/n_samples) * (X.T @ error)
+            db = -(2/n_samples) * np.sum(error)
 
-            # Actualizacion
-            self.w -= self.lr *dw   # Se actualiza el peso despues de aplicar la correccion de gradient descent
-            self.b -= self.lr *db   # Se actualiza el bias despues de aplicar la correccion de gradient descent
+            # Aplico los cambios a mis parametros
+            self.w -= self.lr * dw
+            self.b -= self.lr * db
 
-            # imprimo la epoch en la que estoy y mi valor de loss
+            # Metodo de control
             if epoch % 100 == 0:
                 print(f'Epoch {epoch}: Loss = {loss:.6f}')
-    
+
     def predict(self, X):
-        return X @ self.w + self.b    # Se hace una prediccion una vez los pesos y el bias han sido entrenados
-    
-    def evaluate(self, X, y):
+        '''
+        Funcion de prediccion de resultados
+        '''
+        return X @ self.w + self.b
+
+    def evaluate_MSE(self, X, y):
+        '''
+        Funcion evaluacion de resultados con MSE
+        '''
         y_pred = self.predict(X)
-        return np.mean((y-y_pred)**2)   # MSE
+        return np.mean((y - y_pred**2))
     
 
 
@@ -69,12 +84,12 @@ class LinearRegression():
 # Entrenamiento
 
 
-model = LinearRegression(lr=0.0005, epochs=100000)
+model = LinearRegression(lr=0.0005, epoch=100000)
 
 model.fit(X_train, y_train)
 
-mse_train = model.evaluate(X_train, y_train)
-mse_test = model.evaluate(X_test, y_test)
+mse_train = model.evaluate_MSE(X_train, y_train)
+mse_test = model.evaluate_MSE(X_test, y_test)
 
 print(f'\nMSE (train): {mse_train:.6f}')
 print(f'MSE (test): {mse_test:.6f}')
