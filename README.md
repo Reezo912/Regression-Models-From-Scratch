@@ -47,7 +47,7 @@ MyOwnLinearRegression/
 
 Clona el repositorio:
 ```bash
-git clone <https://github.com/Reezo912/Regression-Models-From-Scratch>
+git clone https://github.com/Reezo912/Regression-Models-From-Scratch
 cd Regression-Models-From-Scratch
 ```
 
@@ -65,10 +65,16 @@ pip install -r requirements.txt
 from src.LinearRegression import LinearRegression
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 data = fetch_california_housing()
 X, y = data.data, data.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Preprocesamiento
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 model = LinearRegression(epoch=1000, lr=0.001)
 model.fit(X_train, y_train)
@@ -80,10 +86,16 @@ predictions = model.predict(X_test)
 from src.LogisticRegression import LogisticRegression
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 data = load_breast_cancer()
 X, y = data.data, data.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Preprocesamiento
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 model = LogisticRegression(epoch=10000, lr=0.0001)
 model.fit(X_train, y_train)
@@ -137,10 +149,41 @@ F1 Score: 0.9832
 
 Instala todas con `pip install -r requirements.txt`.
 
+## 🔧 Solución de Problemas
+
+### Error: "ModuleNotFoundError"
+```bash
+pip install -r requirements.txt
+```
+
+### Error: "ImportError"
+Asegúrate de estar en el directorio raíz del proyecto.
+
+### Error: "ValueError: Found input variables with inconsistent numbers of samples"
+Verifica que X_train y y_train tengan el mismo número de muestras.
+
+### Error: "ConvergenceWarning"
+Aumenta el número de epochs o ajusta el learning rate.
+
 ## 📚 Referencias y Recursos
 - Libro: **Mathematics for Machine Learning** (Deisenroth & Faisal)
 - Curso: **Mathematics for Machine Learning** (Imperial College London - Coursera)
 - Documentación oficial de [scikit-learn](https://scikit-learn.org/stable/)
+
+## 🚀 Roadmap
+
+### Próximas Características
+- [ ] Implementación de Regularización (Ridge/Lasso)
+- [ ] Regresión Logística Multiclase
+- [ ] Validación Cruzada
+- [ ] Visualizaciones de resultados
+- [ ] Optimizadores alternativos (Adam, SGD)
+
+### Mejoras Técnicas
+- [ ] Paralelización del entrenamiento
+- [ ] Early stopping
+- [ ] Learning rate scheduling
+- [ ] Batch gradient descent
 
 ## 🤝 Cómo Contribuir
 ¡Tu contribución es bienvenida!
