@@ -64,14 +64,25 @@ class LogisticRegression():
     def predict(self, X):
         z = X @ self.w + self.b
         y_pred = self.sigmoid(z)
-        print(type(y_pred))
         y_output = (y_pred >= 0.5).astype(int)  # Mascara vectorizada para el output
         return y_output
 
+    
 
-X = [10, 20, 100]
 
 
-model = LogisticRegression()
+# Datos de test
 
-model.predict(X)
+
+X_train = np.array([[10], [20], [90], [80], [30], [60], [70], [40]])
+y_train = np.array([0, 0, 1, 1, 0, 1, 1, 0])
+
+X_test = np.array([[25], [65], [55], [15]])
+y_test = np.array([0, 1, 1, 0])
+
+
+model = LogisticRegression(epoch=100000)
+
+model.fit(X_train, y_train)
+
+model.predict(X_test)
