@@ -123,10 +123,10 @@ F1 Score: 0.9832
 
 ## 🧮 Fundamentos Matemáticos
 
-| Modelo              | Hipótesis                      | Función de Pérdida                                 |
-|---------------------|--------------------------------|-----------------------------------------------------|
-| Regresión Lineal    | `y = Xw + b`                   | ![MSE](https://latex.codecogs.com/svg.image?MSE=\frac{1}{n}\sum\left(y-\hat{y}\right)^{2}) |
-| Regresión Logística | `y = sigmoid(Xw + b)`          | ![LogLoss](https://latex.codecogs.com/svg.image?LogLoss=-\frac{1}{n}\sum\left[y\log(\hat{y})\,+\,(1-y)\log(1-\hat{y})\right]) |
+| Modelo              | Hipótesis                                                                      | Función de Pérdida                                                                                                                      |
+|---------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| Regresión Lineal    | ![LinearHypothesis](https://latex.codecogs.com/svg.image?y=Xw%20%2B%20b&bg=white)   | ![MSE](https://latex.codecogs.com/svg.image?MSE=\frac{1}{n}\sum\left(y-\hat{y}\right)^{2}&bg=white)                                     |
+| Regresión Logística | ![LogisticHypothesis](https://latex.codecogs.com/svg.image?y=sigmoid(Xw%20%2B%20b)&bg=white) | ![LogLoss](https://latex.codecogs.com/svg.image?LogLoss=-\frac{1}{n}\sum\left[y\log(\hat{y})\,+\,(1-y)\log(1-\hat{y})\right]&bg=white) |
 
 
 - **Descenso de Gradiente:** Actualización iterativa usando derivadas parciales.
