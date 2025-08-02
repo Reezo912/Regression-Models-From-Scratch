@@ -105,7 +105,7 @@ probabilities = model.predict_proba(X_test)
 
 ## 🧪 Pruebas
 
-Ejecuta scripts para comparar tus modelos con scikit-learn:
+Ejecuta scripts para comparar los modelos con scikit-learn:
 
 ```bash
 python tests/test_linear.py
