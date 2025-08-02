@@ -20,7 +20,8 @@ MyOwnLinearRegression/
 │   ├── LinearRegression.py      # Implementación de Regresión Lineal
 │   └── LogisticRegression.py    # Implementación de Regresión Logística
 └── tests/
-    └── test.py                  # Script de prueba comparando con sklearn
+    ├── test_linear.py           # Prueba para regresión lineal
+    └── test_logistic.py         # Prueba para regresión logística
 ```
 
 ## 🚀 Características
@@ -93,10 +94,11 @@ probabilities = model.predict_proba(X_test)
 
 ## 🧪 Pruebas
 
-Ejecuta el script de prueba para comparar tus implementaciones con scikit-learn:
+Ejecuta los scripts de prueba para comparar tus implementaciones con scikit-learn:
 
 ```bash
-python tests/test.py
+python tests/test_linear.py
+python tests/test_logistic.py
 ```
 
 Esto mostrará las métricas de rendimiento tanto para tu implementación como para la versión de scikit-learn.
@@ -136,8 +138,8 @@ Esto mostrará las métricas de rendimiento tanto para tu implementación como p
 
 Este proyecto fue inspirado por:
 - **Mathematics for Machine Learning** de Marc Peter Deisenroth y Aldo Faisal
+- **Curso "Mathematics for Machine Learning" del Imperial College London en Coursera**
 - **Documentación de Scikit-learn** para comparación de implementaciones
-- **Materiales del curso Stanford CS229**
 
 ## 🤝 Contribuciones
 

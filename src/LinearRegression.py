@@ -76,36 +76,3 @@ class LinearRegression():
         '''
         y_pred = self.predict(X)
         return np.mean((y - y_pred**2))
-    
-
-
-########
-
-# Entrenamiento
-
-
-model = LinearRegression(lr=0.0005, epoch=100000)
-
-model.fit(X_train, y_train)
-
-mse_train = model.evaluate_MSE(X_train, y_train)
-mse_test = model.evaluate_MSE(X_test, y_test)
-
-print(f'\nMSE (train): {mse_train:.6f}')
-print(f'MSE (test): {mse_test:.6f}')
-
-y_pred = model.predict(X_test)
-print('prediccion ejemplo:', y_pred[:5])
-print('Valor real:', y_test[:5])
-print('Model peso:', model.w)
-print('model bias:', model.b)
-
-
-
-from sklearn.linear_model import LinearRegression
-sk_model = LinearRegression()
-sk_model.fit(X_train, y_train)
-
-print("\nsklearn w:", sk_model.coef_)
-print("sklearn b:", sk_model.intercept_)
-print("MSE test sklearn:", np.mean((y_test - sk_model.predict(X_test))**2))

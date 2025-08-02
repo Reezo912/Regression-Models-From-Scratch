@@ -36,7 +36,7 @@ print('Precision:', precision_score(y_test, y_pred_sk))
 print('Recall:', recall_score(y_test, y_pred_sk))
 print('F1:', f1_score(y_test, y_pred_sk))
 
-print("\n=== TU MODELO ===")
+print("\n=== MI MODELO ===")
 print('Accuracy:', accuracy_score(y_test, y_pred))
 print('Precision:', precision_score(y_test, y_pred))
 print('Recall:', recall_score(y_test, y_pred))
