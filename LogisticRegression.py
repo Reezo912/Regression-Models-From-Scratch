@@ -17,7 +17,7 @@ Ademas de la matriz de confusion
 
 class LogisticRegression():
     def __init__(self, epoch=10000, lr=0.0001):
-        self.W = None
+        self.w = None
         self.b = 0
         self.epoch: int = epoch
         self.lr = lr
@@ -30,7 +30,7 @@ class LogisticRegression():
 
     def fit(self, X, y):
         n_samples, n_features = X.shape
-        self.W = np.zeros(n_features)
+        self.w = np.zeros(n_features)
         self.b = 0.0
 
         for epoch in range(self.epoch):
@@ -43,7 +43,7 @@ class LogisticRegression():
              - Actualizo los parametros (W y b)
             '''
 
-            z = X @ self.W + self.b
+            z = X @ self.w + self.b
             y_pred = self.sigmoid(z)
             error = y_pred - y
 
@@ -64,13 +64,14 @@ class LogisticRegression():
     def predict(self, X):
         z = X @ self.w + self.b
         y_pred = self.sigmoid(z)
-        y_output = np.array()
-        for i in y_pred:
-            if i >= 0.5:
-                i = 1
-                y_output.append(i)
-            else:
-                i = 0
-                y_output.append(i)
+        print(type(y_pred))
+        y_output = (y_pred >= 0.5).astype(int)  # Mascara vectorizada para el output
         return y_output
-        
+
+
+X = [10, 20, 100]
+
+
+model = LogisticRegression()
+
+model.predict(X)
