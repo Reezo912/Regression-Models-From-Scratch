@@ -47,8 +47,8 @@ MyOwnLinearRegression/
 
 Clona el repositorio:
 ```bash
-git clone <url-del-repositorio>
-cd MyOwnLinearRegression
+git clone <https://github.com/Reezo912/Regression-Models-From-Scratch>
+cd Regression-Models-From-Scratch
 ```
 
 Instala dependencias:
