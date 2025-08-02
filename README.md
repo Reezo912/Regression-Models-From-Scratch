@@ -1,158 +1,155 @@
+
 # Mi Propia Regresión Lineal y Logística
 
-Este proyecto implementa algoritmos de **Regresión Lineal** y **Regresión Logística** desde cero usando NumPy. El objetivo es entender los conceptos fundamentales detrás de estos algoritmos básicos de machine learning construyéndolos manualmente.
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-green)](https://www.python.org/downloads/)
+
+Este proyecto implementa algoritmos de **Regresión Lineal** y **Regresión Logística** desde cero utilizando NumPy, con el objetivo de entender los conceptos fundamentales detrás de estos métodos básicos de Machine Learning.
 
 ## 🎯 Descripción del Proyecto
 
-Ambas implementaciones están diseñadas para ser educativas y demuestran:
-- **Fundamentos matemáticos** de los algoritmos de regresión
-- **Optimización por descenso de gradiente**
-- **Cálculos de funciones de pérdida**
-- **Comparación de rendimiento** con implementaciones de scikit-learn
+Ambas implementaciones buscan ser educativas, demostrando:
+- Fundamentos matemáticos claros.
+- Optimización mediante descenso de gradiente.
+- Funciones de pérdida y métricas de evaluación.
+- Comparación directa con implementaciones de scikit-learn.
 
 ## 📁 Estructura del Proyecto
 
 ```
 MyOwnLinearRegression/
 ├── README.md
+├── LICENSE
 ├── requirements.txt
 ├── src/
-│   ├── LinearRegression.py      # Implementación de Regresión Lineal
-│   └── LogisticRegression.py    # Implementación de Regresión Logística
+│   ├── LinearRegression.py      # Implementación desde cero de Regresión Lineal
+│   └── LogisticRegression.py    # Implementación desde cero de Regresión Logística
 └── tests/
-    ├── test_linear.py           # Prueba para regresión lineal
-    └── test_logistic.py         # Prueba para regresión logística
+    ├── test_linear.py           # Pruebas para regresión lineal
+    └── test_logistic.py         # Pruebas para regresión logística
 ```
 
 ## 🚀 Características
 
 ### Regresión Lineal
-- **Regresión lineal multivariante** implementada
-- **Función de pérdida Error Cuadrático Medio (MSE)**
-- **Optimización por descenso de gradiente**
-- **Pruebas con dataset California Housing**
-- **Comparación de rendimiento** con scikit-learn
+- Regresión lineal multivariante.
+- Función de pérdida: Error Cuadrático Medio (MSE).
+- Optimización mediante descenso de gradiente.
+- Validado con el dataset **California Housing**.
 
 ### Regresión Logística
-- **Clasificación binaria** implementada
-- **Función de activación sigmoidea**
-- **Optimización de pérdida logarítmica (cross-entropy)**
-- **Pruebas con dataset Breast Cancer**
-- **Evaluación de métricas de clasificación**
+- Clasificación binaria.
+- Función de activación: Sigmoide.
+- Función de pérdida: Log Loss (Cross-Entropy).
+- Validado con el dataset **Breast Cancer Wisconsin**.
 
 ## 📦 Instalación
 
-1. Clona el repositorio:
+Clona el repositorio:
 ```bash
 git clone <url-del-repositorio>
 cd MyOwnLinearRegression
 ```
 
-2. Instala las dependencias:
+Instala dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🔧 Uso
+## 🔧 Uso Rápido
 
-### Regresión Lineal
+**Nota**: Debes separar previamente tus datos en conjuntos de entrenamiento y prueba (`train_test_split`).
 
+### Ejemplo: Regresión Lineal
 ```python
 from src.LinearRegression import LinearRegression
 from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
 
-# Cargar y preparar datos
 data = fetch_california_housing()
 X, y = data.data, data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-# Crear y entrenar modelo
 model = LinearRegression(epoch=1000, lr=0.001)
 model.fit(X_train, y_train)
-
-# Hacer predicciones
 predictions = model.predict(X_test)
 ```
 
-### Regresión Logística
-
+### Ejemplo: Regresión Logística
 ```python
 from src.LogisticRegression import LogisticRegression
 from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
 
-# Cargar y preparar datos
 data = load_breast_cancer()
 X, y = data.data, data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-# Crear y entrenar modelo
 model = LogisticRegression(epoch=10000, lr=0.0001)
 model.fit(X_train, y_train)
-
-# Hacer predicciones
 predictions = model.predict(X_test)
 probabilities = model.predict_proba(X_test)
 ```
 
 ## 🧪 Pruebas
 
-Ejecuta los scripts de prueba para comparar tus implementaciones con scikit-learn:
+Ejecuta scripts para comparar tus modelos con scikit-learn:
 
 ```bash
 python tests/test_linear.py
 python tests/test_logistic.py
 ```
 
-Esto mostrará las métricas de rendimiento tanto para tu implementación como para la versión de scikit-learn.
+Resultados ejemplo:
 
-## 📊 Resultados
+```
+=== SKLEARN (Logistic) ===
+Accuracy: 0.9860
+F1 Score: 0.9888
 
-### Regresión Lineal
-- **Dataset**: California Housing
-- **Características**: 8 características numéricas
-- **Objetivo**: Valor mediano de la casa
-- **Rendimiento**: Comparable a la implementación de scikit-learn
+=== MI MODELO (Logistic) ===
+Accuracy: 0.9790
+F1 Score: 0.9832
+```
 
-### Regresión Logística
-- **Dataset**: Breast Cancer Wisconsin
-- **Características**: 30 características numéricas
-- **Objetivo**: Clasificación binaria (maligno/benigno)
-- **Métricas**: Accuracy, Precision, Recall, F1-Score
+## 📊 Resultados Obtenidos
 
-## 🧮 Antecedentes Matemáticos
+### Regresión Lineal (California Housing)
+- **MSE** en conjunto de prueba comparable a scikit-learn.
 
-### Regresión Lineal
-- **Hipótesis**: `y = X @ w + b`
-- **Función de Pérdida**: `MSE = (1/n) * Σ(y_true - y_pred)²`
-- **Descenso de Gradiente**: Actualiza pesos usando derivadas parciales
+### Regresión Logística (Breast Cancer Wisconsin)
+- **Accuracy** superior al 97%.
+- **Precision**, **Recall** y **F1-Score** similares a scikit-learn.
 
-### Regresión Logística
-- **Hipótesis**: `y = sigmoid(X @ w + b)`
-- **Activación**: `sigmoid(z) = 1/(1 + e^(-z))`
-- **Función de Pérdida**: `Log Loss = -Σ(y_true * log(y_pred) + (1-y_true) * log(1-y_pred))`
+## 🧮 Fundamentos Matemáticos
+
+| Modelo              | Hipótesis                      | Función de Pérdida                                 |
+|---------------------|--------------------------------|-----------------------------------------------------|
+| Regresión Lineal    | \( y = Xw + b \)               | \( MSE = rac{1}{n}\sum(y_{true}-y_{pred})^2 \)   |
+| Regresión Logística | \( y = sigmoid(Xw + b) \)      | \( -rac{1}{n}\sum(y\log(y')+(1-y)\log(1-y')) \)  |
+
+- **Descenso de Gradiente:** Actualización iterativa usando derivadas parciales.
 
 ## 🛠️ Dependencias
+- `numpy`: Cálculos numéricos.
+- `scikit-learn`: Datasets y comparación.
 
-- `numpy`: Cálculos numéricos
-- `scikit-learn`: Carga de datasets y comparación
+Instala todas con `pip install -r requirements.txt`.
 
-## 📚 Recursos de Aprendizaje
+## 📚 Referencias y Recursos
+- Libro: **Mathematics for Machine Learning** (Deisenroth & Faisal)
+- Curso: **Mathematics for Machine Learning** (Imperial College London - Coursera)
+- Documentación oficial de [scikit-learn](https://scikit-learn.org/stable/)
 
-Este proyecto fue inspirado por:
-- **Mathematics for Machine Learning** de Marc Peter Deisenroth y Aldo Faisal
-- **Curso "Mathematics for Machine Learning" del Imperial College London en Coursera**
-- **Documentación de Scikit-learn** para comparación de implementaciones
-
-## 🤝 Contribuciones
-
-Siéntete libre de contribuir:
-- Agregando nuevas características
-- Mejorando la documentación
-- Optimizando algoritmos
-- Agregando más casos de prueba
+## 🤝 Cómo Contribuir
+¡Tu contribución es bienvenida!
+- Abre un Issue con mejoras.
+- Envía un Pull Request.
+- Mejora documentación y agrega ejemplos.
 
 ## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
+[MIT](LICENSE)
 
 ---
 
-**Nota**: Este proyecto es principalmente educativo. Para uso en producción, considera usar bibliotecas establecidas como scikit-learn, TensorFlow, o PyTorch.
+**Nota Final:** Este proyecto es educativo. Para producción utiliza librerías profesionales como **scikit-learn**, **TensorFlow**, o **PyTorch**.
