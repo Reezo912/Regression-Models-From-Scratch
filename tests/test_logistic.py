@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from sklearn.linear_model import LogisticRegression
 
-
+# TODO: introducir Pipelines para evitar dataleakage en el escalado
 
 
 data = load_breast_cancer()

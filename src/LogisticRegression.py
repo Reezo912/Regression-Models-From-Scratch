@@ -46,8 +46,11 @@ class LogisticRegression():
              - Actualizo los parametros (W y b)
             '''
 
+            epsilon = 1e-15
             z = X @ self.w + self.b
             y_pred = self.sigmoid(z)
+            # Para evitar que por redondeo y_pred=0 añado un clipping
+            y_pred = np.clip(y_pred, epsilon, 1-epsilon)
             error = y_pred - y
 
             log_loss = -(1/n_samples) * np.sum(y * np.log(y_pred) + (1-y)*np.log(1-y_pred))
