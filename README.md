@@ -56,52 +56,6 @@ Instala dependencias:
 pip install -r requirements.txt
 ```
 
-## 🔧 Uso Rápido
-
-**Nota**: Debes separar previamente tus datos en conjuntos de entrenamiento y prueba (`train_test_split`).
-
-### Ejemplo: Regresión Lineal
-```python
-from src.LinearRegression import LinearRegression
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-data = fetch_california_housing()
-X, y = data.data, data.target
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-# Preprocesamiento
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-model = LinearRegression(epoch=1000, lr=0.001)
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
-```
-
-### Ejemplo: Regresión Logística
-```python
-from src.LogisticRegression import LogisticRegression
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-data = load_breast_cancer()
-X, y = data.data, data.target
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-# Preprocesamiento
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-model = LogisticRegression(epoch=10000, lr=0.0001)
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
-probabilities = model.predict_proba(X_test)
-```
 
 ## 🧪 Pruebas
 
