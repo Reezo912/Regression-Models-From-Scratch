@@ -20,8 +20,8 @@ Ademas de la matriz de confusion
 
 class LogisticRegression():
     def __init__(self, epoch=10000, lr=0.0001):
-        self.w: Optional[np.ndarray] = None
-        self.b: float = 0.0
+        self.pesos: Optional[np.ndarray] = None
+        self.bias: float = 0.0
         self.epoch: int = epoch
         self.lr = lr
     
@@ -33,8 +33,8 @@ class LogisticRegression():
 
     def fit(self, X, y) -> None:
         n_samples, n_features = X.shape
-        self.w: np.ndarray = np.zeros(n_features)
-        self.b: float = 0.0
+        self.pesos: np.ndarray = np.zeros(n_features)
+        self.bias: float = 0.0
 
         for epoch in range(self.epoch):
             '''
@@ -47,7 +47,7 @@ class LogisticRegression():
             '''
 
             epsilon = 1e-15
-            z = X @ self.w + self.b
+            z = X @ self.pesos + self.bias
             y_pred = self.sigmoid(z)
             # Para evitar que por redondeo y_pred=0 añado un clipping
             y_pred = np.clip(y_pred, epsilon, 1-epsilon)
@@ -60,15 +60,15 @@ class LogisticRegression():
             db = (1/n_samples) * np.sum(error)
 
             # Actualizacion
-            self.w -= self.lr * dw
-            self.b -= self.lr * db 
+            self.pesos -= self.lr * dw
+            self.bias -= self.lr * db 
 
             # Control
             if epoch % 1000 == 0:
                 print(f'Epoch {epoch}: Log_Loss = {log_loss:.6f}')
 
     def predict(self, X) -> np.ndarray:
-        z = X @ self.w + self.b
+        z = X @ self.pesos + self.bias
         y_pred = self.sigmoid(z)
         y_output= np.array(y_pred >= 0.5).astype(int)  # Mascara vectorizada para el output
         return y_output
@@ -77,6 +77,6 @@ class LogisticRegression():
         '''
         Devuelve la probabilidad de cada clase para cada muestra en X
         '''
-        z = X @ self.w + self.b
+        z = X @ self.pesos + self.bias
         y_pred = self.sigmoid(z)
         return y_pred

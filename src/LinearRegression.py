@@ -15,16 +15,16 @@ libreria NumPy
  '''
 
 class LinearRegression():
-    def __init__(self, epoch=1000, lr=0.001) -> None:
-        self.lr = lr
-        self.epoch = epoch
-        self.w = None  # el valor es None dado que no conozco las dimensiones de X_test
-        self.b: float = 0.0
+    def __init__(self, epoch: int=1000, lr: float=0.001) -> None:
+        self.lr: float = lr
+        self.epoch: int = epoch
+        self.pesos = None  # el valor es None dado que no conozco las dimensiones de X_test
+        self.bias: float = 0.0
 
     def fit(self, X, y)-> None:
         n_samples, n_features = X.shape
-        self.w = np.zeros(n_features)
-        self.b: float = 0.0
+        self.pesos = np.zeros(n_features)
+        self.bias: float = 0.0
 
         for epoch in range(self.epoch):
             '''
@@ -33,7 +33,7 @@ class LinearRegression():
             - Calculo la matriz de error.
             - Calculo el MSE.
             '''
-            y_pred = X @ self.w + self.b
+            y_pred = X @ self.pesos + self.bias
             error = y - y_pred
             loss = np.mean(error**2)
 
@@ -42,8 +42,8 @@ class LinearRegression():
             db = -(2/n_samples) * np.sum(error)
 
             # Aplico los cambios a mis parametros
-            self.w -= self.lr * dw
-            self.b -= self.lr * db
+            self.pesos -= self.lr * dw
+            self.bias -= self.lr * db
 
             # Metodo de control
             if epoch % 1000 == 0:
@@ -53,7 +53,7 @@ class LinearRegression():
         '''
         Funcion de prediccion de resultados
         '''
-        return X @ self.w + self.b
+        return X @ self.pesos + self.bias
 
     def evaluate_mse(self, X, y)-> np.float64:
         '''
