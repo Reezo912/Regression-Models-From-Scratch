@@ -24,9 +24,11 @@ MyOwnLinearRegression/
 ├── src/
 │   ├── LinearRegression.py      # Implementación desde cero de Regresión Lineal
 │   └── LogisticRegression.py    # Implementación desde cero de Regresión Logística
-└── tests/
-    ├── test_linear.py           # Pruebas para regresión lineal
-    └── test_logistic.py         # Pruebas para regresión logística
+├── tests/
+│   ├── test_linear.py           # Pruebas para regresión lineal
+│   └── test_logistic.py         # Pruebas para regresión logística
+└── scripts/
+    └── run_all.py               # Script para ejecutar todos los tests
 ```
 
 ## 🚀 Características
@@ -59,33 +61,40 @@ pip install -r requirements.txt
 
 ## 🧪 Pruebas
 
-Ejecuta scripts para comparar los modelos con scikit-learn:
-
+### Ejecución Completa (Recomendada)
 ```bash
+# Ejecuta todos los tests con formato profesional
+python scripts/run_all.py
+```
+
+### Ejecución Individual
+```bash
+# Test específico de regresión lineal
 python tests/test_linear.py
+
+# Test específico de regresión logística  
 python tests/test_logistic.py
-```
-
-Resultados ejemplo:
-
-```
-=== SKLEARN (Logistic) ===
-Accuracy: 0.9860
-F1 Score: 0.9888
-
-=== MI MODELO (Logistic) ===
-Accuracy: 0.9790
-F1 Score: 0.9832
 ```
 
 ## 📊 Resultados Obtenidos
 
 ### Regresión Lineal (California Housing)
-- **MSE** en conjunto de prueba comparable a scikit-learn.
+| Métrica | scikit-learn | Mi Implementación | Diferencia |
+|---------|--------------|-------------------|------------|
+| **MSE (train)** | 0.5179 | 0.5179 | 0.0000 |
+| **MSE (test)** | 0.5559 | 0.5560 | +0.0001 |
 
-### Regresión Logística (Breast Cancer Wisconsin)
-- **Accuracy** superior al 97%.
-- **Precision**, **Recall** y **F1-Score** similares a scikit-learn.
+✅ **Rendimiento prácticamente idéntico** - Diferencia de solo 0.02% en test set
+
+### Regresión Logística (Breast Cancer Wisconsin)  
+| Métrica | scikit-learn | Mi Implementación | Diferencia |
+|---------|--------------|-------------------|------------|
+| **Accuracy** | 98.60% | 97.90% | -0.70% |
+| **Precision** | 98.89% | 98.88% | -0.01% |
+| **Recall** | 98.89% | 97.78% | -1.11% |
+| **F1-Score** | 98.89% | 98.32% | -0.57% |
+
+✅ **Excelente rendimiento** - Solo 0.7% de diferencia en accuracy con implementación desde cero
 
 ## 🧮 Fundamentos Matemáticos
 

@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Optional
 
 # Formula y_pred = X_test @ w + b
 # w: pesos
@@ -17,13 +17,13 @@ libreria NumPy
 class LinearRegression():
     def __init__(self, epoch: int=1000, lr: float=0.001) -> None:
         if epoch <= 0:
-            raise ValueError('epoch debe ser mayor que 0')
+            raise ValueError('el valor de epoch debe ser mayor que 0')
         if lr <= 0:
-            raise ValueError('lr debe ser mayor que 0')
-
-        self.lr: float = lr
+            raise ValueError('el valor de lr debe ser mayor que 0')
+        
         self.epoch: int = epoch
-        self.pesos = None  # el valor es None dado que no conozco las dimensiones de X_test
+        self.lr: float = lr
+        self.pesos: Optional[np.ndarray] = None  # el valor es None dado que no conozco las dimensiones de X_test
         self.bias: float = 0.0
 
     def fit(self, X: np.ndarray, y: np.ndarray)-> None:
@@ -31,7 +31,7 @@ class LinearRegression():
         X, y = self._validate_inputs(X=X, y=y, check_fitted=False)
         n_samples, n_features = X.shape
         self.pesos = np.zeros(n_features)
-        self.bias: float = 0.0
+        self.bias = 0.0
 
         for epoch in range(self.epoch):
             '''

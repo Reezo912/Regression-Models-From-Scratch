@@ -1,6 +1,5 @@
 import sys
 import os
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 import numpy as np
@@ -34,10 +33,12 @@ pipeline_my_model.fit(X_train, y_train)
 y_pred_mymodel = pipeline_my_model.predict(X_test)
 
 
-mse_train_sk = np.mean((y_train - pipeline_sk.predict(X_train))**2)
+y_pred_train_sk = pipeline_sk.predict(X_train)
+mse_train_sk = np.mean((y_train - y_pred_train_sk)**2)
 mse_test_sk = np.mean((y_test - y_pred_sk)**2)
 
-mse_train = np.mean((y_train - pipeline_my_model.predict(X_train))**2)
+y_pred_train_mymodel = pipeline_my_model.predict(X_train)
+mse_train = np.mean((y_train - y_pred_train_mymodel)**2)
 mse_test = np.mean((y_test - y_pred_mymodel)**2)
 
 
