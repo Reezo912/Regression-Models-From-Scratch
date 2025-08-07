@@ -28,7 +28,7 @@ y_pred_sk = pipeline_sk.predict(X_test)
 
 pipeline_mymodel = Pipeline([
     ('scaler', StandardScaler()),
-    ('model', MyLogisticRegression(epoch=100000, lr=0.001))
+    ('model', MyLogisticRegression(epochs=100000, lr=0.001))
 ])
 
 pipeline_mymodel.fit(X_train, y_train)

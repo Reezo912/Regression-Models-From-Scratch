@@ -2,7 +2,7 @@ import numpy as np
 from typing import Optional
 
 # Formula y_pred = X_test @ w + b
-# w: pesos
+# w: weights
 # b: bias
 
 '''
@@ -15,32 +15,32 @@ libreria NumPy
  '''
 
 class LinearRegression():
-    def __init__(self, epoch: int=1000, lr: float=0.001) -> None:
-        if epoch <= 0:
-            raise ValueError('el valor de epoch debe ser mayor que 0')
+    def __init__(self, epochs: int=1000, lr: float=0.001) -> None:
+        if epochs <= 0:
+            raise ValueError(f'epochs debe ser un entero positivo, recibido: {epochs}')
         if lr <= 0:
-            raise ValueError('el valor de lr debe ser mayor que 0')
+            raise ValueError(f'learning_rate debe ser un número positivo, recibido: {lr}')
         
-        self.epoch: int = epoch
+        self.epochs: int = epochs
         self.lr: float = lr
-        self.pesos: Optional[np.ndarray] = None  # el valor es None dado que no conozco las dimensiones de X_test
+        self.weights: Optional[np.ndarray] | None = None  # el valor es None dado que no conozco las dimensiones de X_test
         self.bias: float = 0.0
 
     def fit(self, X: np.ndarray, y: np.ndarray)-> None:
         
         X, y = self._validate_inputs(X=X, y=y, check_fitted=False)
         n_samples, n_features = X.shape
-        self.pesos = np.zeros(n_features)
+        self.weights = np.zeros(n_features)
         self.bias = 0.0
 
-        for epoch in range(self.epoch):
+        for epoch in range(self.epochs):
             '''
             Por cada Epoch:
             - Defino mi funcion de la regresion lineal
             - Calculo la matriz de error.
             - Calculo el MSE.
             '''
-            y_pred = X @ self.pesos + self.bias
+            y_pred = X @ self.weights + self.bias
             error = y - y_pred
             loss = np.mean(error**2)
 
@@ -49,7 +49,7 @@ class LinearRegression():
             db = -(2/n_samples) * np.sum(error)
 
             # Aplico los cambios a mis parametros
-            self.pesos -= self.lr * dw
+            self.weights -= self.lr * dw
             self.bias -= self.lr * db
 
             # Metodo de control
@@ -61,7 +61,7 @@ class LinearRegression():
         Funcion de prediccion de resultados
         '''
         X, _ = self._validate_inputs(X=X)
-        return X @ self.pesos + self.bias
+        return X @ self.weights + self.bias
 
     def evaluate_mse(self, X: np.ndarray, y: np.ndarray)-> np.float64:
         '''
@@ -81,21 +81,27 @@ class LinearRegression():
             y = np.array(y)
         
         if X.size == 0:
-            raise ValueError('X no puede estar vacío')
+            raise ValueError('X no puede estar vacío. Proporciona una matriz con al menos una muestra.')
         if y is not None and y.size == 0:
-            raise ValueError('y no puede estar vacío')
+            raise ValueError('y no puede estar vacío. Proporciona un vector con al menos una etiqueta.')
 
         if y is not None:
             if y.ndim != 1:
-                raise ValueError('y debe ser un vector 1D')
+                raise ValueError(f'y debe ser un vector 1D (shape (n,)), pero recibió forma {y.shape}. '
+                               f'Usa y.ravel() o y.reshape(-1) para aplanar.')
             if X.shape[0] != y.shape[0]:
-                raise ValueError('X e y deben tener el mismo número de muestras')
+                raise ValueError(f'X e y deben tener el mismo número de muestras. '
+                               f'X: {X.shape[0]} muestras, y: {y.shape[0]} muestras.')
 
-        if check_fitted and self.pesos is None:
-            raise ValueError('El modelo no ha sido entrenado')
+        if check_fitted and self.weights is None:
+            raise ValueError('El modelo no ha sido entrenado. Llama primero al método fit(X, y) '
+                           'con tus datos de entrenamiento.')
         
-        if check_fitted and self.pesos is not None:
-            if X.shape[1] != self.pesos.shape[0]:
-                raise ValueError(f'Esperadas {self.pesos.shape[0]} features, obtenidas {X.shape[1]}')
+        if check_fitted and self.weights is not None:
+            if X.shape[1] != self.weights.shape[0]:
+                raise ValueError(f'Inconsistencia en número de características. '
+                               f'Modelo entrenado con {self.weights.shape[0]} características, '
+                               f'pero datos de entrada tienen {X.shape[1]}. '
+                               f'Verifica que uses el mismo preprocesamiento.')
 
         return X, y

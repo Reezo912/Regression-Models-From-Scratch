@@ -27,7 +27,7 @@ y_pred_sk = pipeline_sk.predict(X_test)
 
 pipeline_my_model = Pipeline([
     ('scaler', StandardScaler()),
-    ('model', MyLinearRegression(lr=0.0005, epoch=100000))
+    ('model', MyLinearRegression(lr=0.0005, epochs=100000))
 ])
 pipeline_my_model.fit(X_train, y_train)
 y_pred_mymodel = pipeline_my_model.predict(X_test)
@@ -50,7 +50,7 @@ print("MSE (test):", mse_test_sk)
 
 
 print("\n=== MI MODELO ===")
-print("pesos:", pipeline_my_model['model'].pesos)
+print("pesos:", pipeline_my_model['model'].weights)
 print("bias:", pipeline_my_model['model'].bias)
 print("MSE (train):", mse_train)
 print("MSE (test):", mse_test)

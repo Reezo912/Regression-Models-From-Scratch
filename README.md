@@ -135,18 +135,45 @@ Aumenta el número de epochs o ajusta el learning rate.
 
 ## 🚀 Roadmap
 
-### Próximas Características
-- [ ] Implementación de Regularización (Ridge/Lasso)
-- [ ] Regresión Logística Multiclase
-- [ ] Validación Cruzada
-- [ ] Visualizaciones de resultados
-- [ ] Optimizadores alternativos (Adam, SGD)
+### 🔥 v0.0.4 - Mejoras Críticas (En progreso)
+**Objetivo**: Optimizar implementaciones actuales para máxima robustez
 
-### Mejoras Técnicas
-- [ ] Paralelización del entrenamiento
-- [ ] Early stopping
-- [ ] Learning rate scheduling
-- [ ] Batch gradient descent
+**Prioridad Alta:**
+- [ ] 🐛 Arreglar consistencia de nombres (`weights` vs `pesos`)
+- [ ] ⚡ Implementar parada temprana (early stopping)
+- [ ] 📈 Programación de decaimiento de tasa de aprendizaje
+- [ ] 🔧 Parámetro de control de verbosidad
+- [ ] 📊 Seguimiento de métricas de convergencia
+- [ ] ⚠️ Mejores mensajes de error
+
+**Resultado esperado**: Implementaciones perfectas y profesionales
+
+### 🚀 v0.1.0 - Nuevos Algoritmos (Planificado)
+**Objetivo**: Expandir familia de algoritmos de regresión
+
+**Nuevas Funcionalidades:**
+- [ ] 🎯 Regresión Ridge (regularización L2)
+- [ ] 🎯 Regresión Lasso (regularización L1)  
+- [ ] 🎯 ElasticNet (combinación L1 + L2)
+- [ ] 📐 Soporte para características polinómicas
+- [ ] 🔄 Marco de validación cruzada
+
+### 💡 v0.2.0 - Algoritmos Avanzados (Futuro)
+**Objetivo**: Machine Learning más allá de regresión
+
+**Algoritmos Planificados:**
+- [ ] 🤖 Máquinas de Vectores de Soporte (SVM)
+- [ ] 🌳 Árboles de Decisión desde cero
+- [ ] 🔍 Agrupamiento K-Means
+- [ ] 📊 Análisis de Componentes Principales (PCA)
+- [ ] 🧠 Red Neuronal (Perceptrón)
+
+### 🛠️ Mejoras de Infraestructura (Continuas)
+- [ ] 📈 Suite de evaluación de rendimiento
+- [ ] 🎨 Herramientas de visualización de datos
+- [ ] 📦 Pruebas automatizadas con GitHub Actions
+- [ ] 📚 Documentación de API con Sphinx
+- [ ] 🐳 Contenedorización con Docker
 
 ## 🤝 Cómo Contribuir
 ¡Tu contribución es bienvenida!
