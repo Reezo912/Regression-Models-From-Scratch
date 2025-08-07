@@ -3,6 +3,7 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-green)](https://www.python.org/downloads/)
+[![NumPy Version](https://img.shields.io/badge/NumPy-1.26%2B-yellow)](https://numpy.org/)
 
 Este proyecto implementa algoritmos de **Regresión Lineal** y **Regresión Logística** desde cero utilizando NumPy, con el objetivo de entender los conceptos fundamentales detrás de estos métodos básicos de Machine Learning.
 
