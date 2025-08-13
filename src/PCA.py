@@ -16,10 +16,15 @@ X_std = (X - media) / std_dev
 
 
 class PCA():
-    def __init__(self) -> None:
-        pass
+    def __init__(self, n_components) -> None:
+        self.n_components = n_components
+        self.components_ = None
+        self.explained_variance_ = None
+        self.mean_ = None
+        self.std_ = None
 
-    def _validate_inputs(self, X: np.ndarray)-> None:
+
+    def _validate_inputs(self, X: np.ndarray)-> np.ndarray:
         if not isinstance(X, np.ndarray):
             X = np.array(X)
         
@@ -31,35 +36,66 @@ class PCA():
         
         return X
     
-    def _standardize(self, X: np.ndarray)-> np.ndarray:
-        if np.any(X.std(axis=0) == 0):
-            raise ValueError('Al menos una columna tiene desviación estándar cero, no se puede estandarizar para PCA.')
+    def _standardize(self, X: np.ndarray)-> None:
+        '''
+        Devuelve la media, la std y el array standarizado
+        '''
+        mean = X.mean(axis=0)
+        std = X.std(axis=0)
+        if np.any(std == 0):
+            raise ValueError('Al menos una columna tiene desviación estándar igual a cero, no se puede estandarizar para PCA.')
         
-        X_std = (X - X.mean(axis=0)) / X.std(axis=0)
-        return X_std
+        X_std = (X - mean) / std
+        return X_std, mean, std
 
     def fit(self, X: np.ndarray)-> np.ndarray:
+        '''
+        Metodo para aplicar fit sobre la matriz dada, los resultados se guardan en el objeto
+        '''
         X = self._validate_inputs(X)
-        X_std = self._standardize(X)
+        X_std, mean, std = self._standardize(X)
+        self.mean_ = mean
+        self.std_ = std
 
         # Matriz de covarianza
         n_rows = X.shape[0]
-        cov_matrix = (X_std.T @ X_std) / (n_rows - 1)
-        eig_val, eig_vec = np.linalg.eig(cov_matrix)
-        print(eig_val, eig_vec)
+        cov_matrix = (X_std.T @ X_std) / (n_rows - 1)  # Para implementacion normal usar np.cov()
+        # Extraigo autovectores y autovalores
+        eig_val, eig_vec = np.linalg.eigh(cov_matrix)
+        
+        # Obtengo los indices ordenados de mayor a menor de los autovectores, para luego aplicarlos sobre los autovalores.
+        idx = np.argsort(eig_val)[::-1]
 
+        eig_val = eig_val[idx]
+        eig_vec = eig_vec[:, idx]
 
+        # Reduzco el numero de componentes a los solicitados con slice
+        eig_val = eig_val[:self.n_components]
+        eig_vec = eig_vec[:, :self.n_components]
 
+        # Obtengo los componentes, la varianza y la media
+        self.components_ = eig_vec
+        self.explained_variance_ = eig_val
 
+        return self
 
-# ------------------------
+    
+    def transform(self, X:np.ndarray)-> np.ndarray:
+        '''
+        Metodo para aplicar el transform, el objeto debe de haber hecho fit antes.
+        Da como resultado un array
+        '''
+        if self.mean_ == None:
+            raise Exception('Primero tienes que usar .fit() en el array')
 
-# Test
+        X = self._validate_inputs(X)
+        X_std = (X - self.mean_) / self.std_
+        return X_std @ self.components_
+    
+    def fit_transform(self, X: np.ndarray)-> np.ndarray:
+        '''
+        Metodo para aplicar el fit y el transform automaticamente
+        '''
 
-
-X = [[0, 3 ,2], [2, 1, 3]]
-
-
-pca = PCA()
-
-pca.fit(X)
+        self.fit(X)
+        return self.transform(X)
