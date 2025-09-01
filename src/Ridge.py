@@ -9,17 +9,16 @@ from typing import Optional
 '''
 En este caso, la funcion de coste tiene un anadido, tal que queda de la siguiente manera:
 
-J(θ) = (1/2m) * Σ(y_pred - y)² + λ * R(θ)
+J(θ) = (1/2m) * Σ(y_pred - y)² + λ * Σ(θᵢ)²
 
-Donde λ es el parametro llamado alpha que controla la regularizacion y R(θ) representa una funcion
-de la suma de la suma del valor absoluto de todos los pesos del modelo(w) 
+Donde λ es el parametro llamado alpha que controla la regularizacion al que hay que multiplicar la suma del cuadrado de todos los pesos.
 '''
 
 
 
 
-class LassoRegression():
-    def __init__(self, epochs: int=1000, lr: float=0.001, alpha: float=0.001) -> None:
+class RidgeRegression():
+    def __init__(self, epochs: int=1000, lr: float=0.001, alpha: float=0.5) -> None:
         if epochs <= 0:
             raise ValueError(f'epochs debe ser un entero positivo, recibido: {epochs}')
         if lr <= 0:

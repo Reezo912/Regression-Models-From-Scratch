@@ -35,7 +35,7 @@ y_pred_mymodel = pipeline_my_model.predict(X_test)
 
 pipeline_my_lasso = Pipeline([
     ('scaler', StandardScaler()),
-    ('model', LassoRegression(lr=0.0005, epochs=100000, alpha=0.5))
+    ('model', LassoRegression(lr=0.0005, epochs=100000, alpha=0.001))
 ])
 pipeline_my_lasso.fit(X_train, y_train)
 y_pred_my_lasso = pipeline_my_lasso.predict(X_test)
