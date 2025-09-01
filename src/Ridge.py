@@ -18,7 +18,7 @@ Donde λ es el parametro llamado alpha que controla la regularizacion al que hay
 
 
 class RidgeRegression():
-    def __init__(self, epochs: int=1000, lr: float=0.001, alpha: float=0.5) -> None:
+    def __init__(self, epochs: int=1000, lr: float=0.001, alpha: float=0.001) -> None:
         if epochs <= 0:
             raise ValueError(f'epochs debe ser un entero positivo, recibido: {epochs}')
         if lr <= 0:
@@ -40,17 +40,17 @@ class RidgeRegression():
             Por cada Epoch:
             - Defino mi funcion de la regresion lineal
             - Calculo la matriz de error.
-            - Calculo el MSE.
+            - Calculo el MSE con  la regularizacion L2.
             '''
             y_pred = X @ self.weights + self.bias
             error = y - y_pred
-            J = np.sum(abs(self.weights))
+            J = np.sum((self.weights**2))
             loss = np.mean(error**2) + (self.alpha * J)
 
             
 
             # Aplico el descenso de gradiente
-            dw = -(2/n_samples) * (X.T @ error) + self.alpha * np.sign(self.weights)
+            dw = -(2/n_samples) * (X.T @ error) + (2 * self.alpha * self.weights)
             db = -(2/n_samples) * np.sum(error)
 
             # Aplico los cambios a mis parametros

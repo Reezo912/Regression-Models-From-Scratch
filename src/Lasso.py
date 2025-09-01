@@ -41,7 +41,7 @@ class LassoRegression():
             Por cada Epoch:
             - Defino mi funcion de la regresion lineal
             - Calculo la matriz de error.
-            - Calculo el MSE.
+            - Calculo el MSE con  la regularizacion L1.
             '''
             y_pred = X @ self.weights + self.bias
             error = y - y_pred
