@@ -45,8 +45,8 @@ class LassoRegression():
             '''
             y_pred = X @ self.weights + self.bias
             error = y - y_pred
-            J = np.sum(abs(self.weights))
-            loss = np.mean(error**2) + self.alpha * J
+            self.J = np.sum(abs(self.weights))
+            loss = np.mean(error**2) + self.alpha * self.J
 
             
 
@@ -62,53 +62,52 @@ class LassoRegression():
             if epoch % 1000 == 0:
                 print(f'Epoch {epoch}: Loss = {loss:.6f}')
 
+    def predict(self, X: np.ndarray)-> np.ndarray:
+        '''
+        Funcion de prediccion de resultados
+        '''
+        X, _ = self._validate_inputs(X=X)
+        return X @ self.weights + self.bias
 
+    def evaluate_mse(self, X: np.ndarray, y: np.ndarray)-> np.float64:
+        '''
+        Funcion evaluacion de resultados con MSE
+        '''
+        X, y = self._validate_inputs(X=X, y=y)
+        y_pred = self.predict(X)
+        return np.mean((y - y_pred)**2) + self.alpha * self.J
 
+    def _validate_inputs(self, X, y=None, check_fitted=True):
+        '''
+        Funcion para validar los inputs y evitar fallos ademas de dar feedback para correccion.
+        '''
+        if not isinstance(X, np.ndarray):
+            X = np.array(X)
+        if y is not None and not isinstance(y, np.ndarray):
+            y = np.array(y)
+        
+        if X.size == 0:
+            raise ValueError('X no puede estar vacío. Proporciona una matriz con al menos una muestra.')
+        if y is not None and y.size == 0:
+            raise ValueError('y no puede estar vacío. Proporciona un vector con al menos una etiqueta.')
 
+        if y is not None:
+            if y.ndim != 1:
+                raise ValueError(f'y debe ser un vector 1D (shape (n,)), pero recibió forma {y.shape}. '
+                            f'Usa y.ravel() o y.reshape(-1) para aplanar.')
+            if X.shape[0] != y.shape[0]:
+                raise ValueError(f'X e y deben tener el mismo número de muestras. '
+                            f'X: {X.shape[0]} muestras, y: {y.shape[0]} muestras.')
 
+        if check_fitted and self.weights is None:
+            raise ValueError('El modelo no ha sido entrenado. Llama primero al método fit(X, y) '
+                        'con tus datos de entrenamiento.')
+        
+        if check_fitted and self.weights is not None:
+            if X.shape[1] != self.weights.shape[0]:
+                raise ValueError(f'Inconsistencia en número de características. '
+                            f'Modelo entrenado con {self.weights.shape[0]} características, '
+                            f'pero datos de entrada tienen {X.shape[1]}. '
+                            f'Verifica que uses el mismo preprocesamiento.')
 
-
-
-
-
-
-
-
-
-
-
-
-        def _validate_inputs(self, X, y=None, check_fitted=True):
-            '''
-            Funcion para validar los inputs y evitar fallos ademas de dar feedback para correccion.
-            '''
-            if not isinstance(X, np.ndarray):
-                X = np.array(X)
-            if y is not None and not isinstance(y, np.ndarray):
-                y = np.array(y)
-            
-            if X.size == 0:
-                raise ValueError('X no puede estar vacío. Proporciona una matriz con al menos una muestra.')
-            if y is not None and y.size == 0:
-                raise ValueError('y no puede estar vacío. Proporciona un vector con al menos una etiqueta.')
-
-            if y is not None:
-                if y.ndim != 1:
-                    raise ValueError(f'y debe ser un vector 1D (shape (n,)), pero recibió forma {y.shape}. '
-                                f'Usa y.ravel() o y.reshape(-1) para aplanar.')
-                if X.shape[0] != y.shape[0]:
-                    raise ValueError(f'X e y deben tener el mismo número de muestras. '
-                                f'X: {X.shape[0]} muestras, y: {y.shape[0]} muestras.')
-
-            if check_fitted and self.weights is None:
-                raise ValueError('El modelo no ha sido entrenado. Llama primero al método fit(X, y) '
-                            'con tus datos de entrenamiento.')
-            
-            if check_fitted and self.weights is not None:
-                if X.shape[1] != self.weights.shape[0]:
-                    raise ValueError(f'Inconsistencia en número de características. '
-                                f'Modelo entrenado con {self.weights.shape[0]} características, '
-                                f'pero datos de entrada tienen {X.shape[1]}. '
-                                f'Verifica que uses el mismo preprocesamiento.')
-
-            return X, y
+        return X, y
